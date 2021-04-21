@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js</title>
+</head>
+
+<body>
+    <!-- Задача 2. Конвертер валют. -->
+<div class="currency">
+  <div class="currency__label">
+    Меняю
+    <input class="currency__input" type="text">
+    <select class="currency__select" id="currency__select">
+      <option value="UAH">UAH</option>
+      <option value="USD">USD</option>
+      <option value="EUR">EUR</option>
+    </select>
+  </div>
+  <div class="currency__label">
+    Получаю
+    <input class="currency__input" id="result" type="text" readonly value="">
+    <select class="currency__select" id="currency__select2">
+      <option value="UAH">UAH</option>
+      <option value="USD">USD</option>
+      <option value="EUR">EUR</option>
+    </select>
+  </div>
+  <button class="currency__btn" onclick="convert()">Рассчитать</button>
+</div>
+
+<script>
+
+  /* Конвертер валют */
+
+  let label =  document.querySelectorAll('.currency__label');
+
+  function marginLabel(x, i, arr){
+    for (let i = 0; i < arr.length; i++) {
+      arr[i].style.marginBottom = '15px';
+    }
+  }
+
+  label.forEach(marginLabel);
+  
+  
+  function convert(){
+    
+    let inputVal = document.querySelector('.currency__input').value;
+    let result = document.getElementById('result');
+    
+    let optionIndex1 = document.getElementById('currency__select').options.selectedIndex;
+    let optionActive1 = document.getElementById('currency__select').options[optionIndex1].value;
+    
+    let optionIndex2 = document.getElementById('currency__select2').options.selectedIndex;
+    let optionActive2 = document.getElementById('currency__select2').options[optionIndex2].value;
+    
+    let kUsdUah = 27.68;
+    let kEurUah = 32.98;
+    let kEurUsd = 1.19;
+    
+
+    if (inputVal <= 0) {
+      return result.value = 'Введено неверное значение';
+    }else{
+      let res = inputVal;
+      if (optionActive1 == 'UAH') {
+        if (optionActive2 == 'USD') {
+          res /= kUsdUah;
+        }else if (optionActive2 == 'EUR') {
+          res /= kEurUah;
+        }
+      }else if (optionActive1 == 'USD') {
+        if (optionActive2 == 'UAH') {
+          res *= kUsdUah;
+        }else if (optionActive2 == 'EUR') {
+          res /= kEurUsd;
+        }
+      }else{
+        if (optionActive2 == 'UAH') {
+          res *= kEurUah;
+        }else if (optionActive2 == 'USD') {
+          res *= kEurUsd;
+        }
+      }
+      return result.value = (+res).toFixed(2);
+
+    }
+  }
+
+
+</script>
+</body>
+
+
+</html>
+

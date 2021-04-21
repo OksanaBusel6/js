@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>js</title>
+</head>
+
+<body>
+  <!-- Задача. Дано списки продуктів. Знайти сумарну вартість -->
+  <div class="container">
+    <div class="product">
+      <table class="product__table">
+        <tr class="product__items">
+          <td class="poruct__title">
+            Название
+          </td>
+          <td class="poruct__title">
+            Цена, грн.
+          </td>
+        </tr>
+        <tr class="product__items product__content">
+          <td class="poruct__item">
+            <textarea class="product__textarea"></textarea>
+          </td>
+          <td class="poruct__item">
+            <input class="product__input product__input--num" type="text">
+          </td>
+        </tr>
+        <tr class="product__items product__items--result">
+          <td class="poruct__item">
+            <input class="product__input" type="text" value="Result" readonly>
+          </td>
+          <td class="poruct__item">
+            <input class="product__input product__input--result" type="text" readonly>
+          </td>
+        </tr>
+      </table>
+      <button class="product__btn product__btn--row">Add row</button>
+      <button class="product__btn product__btn--table">Add table</button>
+      <button class="product__btn product__btn--result">Result</button>
+    </div>
+  </div>
+  <p class="product__resAll"></p>
+
+  <script src="main.js"></script>
+</body>
+
+</html>
