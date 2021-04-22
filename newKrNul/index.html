@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game</title>
+  <style>
+    *{
+      box-sizing: border-box;
+      font-size: 18px;
+    }
+    body {
+      width: 100%;
+      height: 100vh;
+      margin: 0;
+    }
+    .wrapper {
+      width: 100%; 
+      height: 100vh; 
+      background-color: #c4e4f9; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      flex-direction: column;
+    }
+    .question {
+      padding: 20px;
+      text-align: center;
+      background-color: #fff;
+    }
+    .question__title,
+    .game__text {
+      font-size: 26px;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+    .question__items {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      margin-bottom: 25px;
+    }
+    .question__item {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    .name {
+      margin-top: 20px;
+    }
+    .name__input {
+      width: 100%;
+      height: 30px;
+      margin: 10px 0 15px;
+    }
+    .btn-next {
+      padding: 5px 20px;
+      display: block;
+      margin: 0 auto;
+      cursor: pointer;
+    }
+    .game {
+      display: none;
+      background-color: #fff;
+      padding: 40px 30px 30px;
+      position: relative;
+      margin-bottom: 10px;
+    }
+    .game.active {
+      display: block;
+    }
+    .game__close {
+      position: absolute;
+      display: block;
+      width: 30px;
+      height: 30px;
+      right: 12px;
+      top: 14px;
+      font-size: 16px;
+      font-weight: 700; border:none;
+      cursor: pointer;
+      background-color: transparent;
+    }
+    .game__table {
+      text-align: center;
+      border: 6px solid transparent;
+      border-collapse: collapse;
+      margin: 0 auto;
+    }
+    .game__item {
+      border: 4px solid #000;
+      width: 70px;
+      height: 70px;
+      cursor: pointer;
+    }
+    .btn-over {
+      display: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      width: 200px;
+      height: 50px;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <script type="module" src="main.js"></script>
+  <!-- <script src="main.js"></script> -->
+</body>
+</html>
