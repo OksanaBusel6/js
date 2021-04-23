@@ -1,16 +1,20 @@
-export const module = {
+export class Module {
   choseNum(num) {
     changeNum(num); 
-  },
+  }
   startGame() {
     const names = start();
     return names;
-  },
+  }
   clickTd(that) {
     const tdWin = moveUser(that);
     return tdWin;
   }
-};
+  closeGame() {
+     let names = close();
+     return names;
+  }
+}
 
 
 /* -----------------------------------------ModuleUser.js------------------------------------------ */
@@ -46,23 +50,27 @@ function start() {
   }
 
   let inputsName = document.querySelectorAll('.name__input');
-  user1.name = inputsName[0].value || 'Первый игрок';
-  user2.name = inputsName[1].value || 'Второй игрок';
+  user1.name = inputsName[0].value.trim() || 'Первый игрок';
+  user2.name = inputsName[1].value.trim() || 'Второй игрок';
   return [user1.name, user2.name];
 }
 
 /* -----------------------------------------Game-------------------------------------------------------- */
+let over;
+
 function moveUser(that) {
   let thisAttr = that.getAttribute('data-num');
-  if (thisAttr) {
+  if (+thisAttr) {
+    over = 0;
     return {win: 0};
   }
 
+  if (over > 0) {
+    return {win: 0};
+  }
+  
   let result;
-  let tdAll = document.querySelectorAll('td');
-  let tdAttr = attr(tdAll);
   let active, notActive;
-
   
   if (user1.active == 1) {
     active = user1;
@@ -71,16 +79,29 @@ function moveUser(that) {
     active = user2;
     notActive = user1;
   }
-
+  
   that.setAttribute('data-num', active.num);
+  let tdAll = document.querySelectorAll('td');
+  let tdAttr = attr(tdAll);
+  
   result = win(+active.num, tdAttr);
 
   if (result > 0) {
+    over = 1;
     return {win: 1, num: active.num, name: active.name};
   } else {
     let every = tdAttr.every((x) => x > 0);
-    return (every) ? {win: 2, num: active.num, name: 'Ничья!'} : 
-                     {win: -1, num: active.num, name: notActive.name};
+    if (every) {
+      over = 2;
+      return {win: 2, num: active.num, name: 'Ничья!'};
+    } else {
+      over = -1; 
+      active.active = 0;
+      notActive.active = 1;
+      return {win: -1, num: active.num, name: notActive.name};
+    }
+    
+                     
   }
 }
 
@@ -106,4 +127,13 @@ function win(num, arr) {
   } else {
     return 0;
   }
+}
+
+function close() {
+  user1.active = 1;
+  user2.active = 0;
+
+  over = 0;
+
+  return [user1.name, user2.name];
 }
