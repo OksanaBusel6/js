@@ -34,7 +34,7 @@ class Input extends Block {
     this.block.value = this.value;
   }
   toStr() {
-    return `<${this.tag} class="${this.class}" type="text" value="${this.value}"/>`;
+    return `<${this.tag} class="${this.class}" type="text" value="${this.value}" maxlength="12"/>`;
   }
 }
 
@@ -60,7 +60,7 @@ export const view = {
     } else {
       dNone('.question');
       dBlock('.game');
-      dBlock('.btn-over')
+      dBlock('.btn-over');
       let text1 = `Ходит ${names[0]}`;
       addText('.game__text', text1);
     }
@@ -74,18 +74,41 @@ export const view = {
 
   },
 
-  overGame(win, name) {
+  overGame(that, win, num, name) {
+    (num == 1) ? that.innerHTML = 'X' : that.innerHTML = 'O';
+
     const text = `Выиграл ${name}!`;
     (win == 1) ? addText('.game__text', text) : addText('.game__text', name);
+  },
+
+  closeGame(names) {
+    close(names);
   }
 
 };
+
+function close(names) {
+  dBlock('.question');
+  dNone('.game');
+  dNone('.btn-over');
+
+  let inputsName = document.querySelectorAll('input');
+  inputsName[0].value = names[0];
+  inputsName[1].value = names[1];
+
+  let itemsTd = document.querySelectorAll('.game__item');
+  for (let i = 0; i < itemsTd.length; i++) {
+    let td = itemsTd[i];
+    td.innerHTML = '';
+    td.setAttribute('data-num', 0);
+  }
+} 
 
 function createGameState() {
   let tabInner = new Div('game');
   addToParents('.wrapper', tabInner.toStr());
   
-  let tabClose = new Div('game__close', 'X', 'button');
+  let tabClose = new Div('game__close close', 'X', 'button');
   let gameText =new Div('game__text', '');
   let table = new Div('game__table', '', 'table');
   addToParents(tabInner.select, [tabClose.toStr(), gameText.toStr(), table.toStr()].join(' '));
@@ -103,42 +126,42 @@ function createGameState() {
     document.querySelector('.game__table').appendChild(tr.block);
   }
 
-  let btnOver = new Div('btn-over', 'Начать заново', 'button');
+  let btnOver = new Div('btn-over close', 'Начать заново', 'button');
   addToParents('.wrapper', btnOver.toStr(), 'beforeend');
 }
   
-  function createFIrstState() {
-    let wrapper = new Div('wrapper');
-    addToParents('body', wrapper.toStr());
-    
-    let ques = new Div('question');
-    addToParents(wrapper.select, ques.toStr());
-    
-    let quesTitle = new Div('question__title', 'Сделайте выбор для первого игрока');
-    let quesItems = new Div('question__items');
-    let nameInner = new Div('name');
-    let quesBtnNext = new Div('btn-next', 'Начать игру', 'button');
-    let itemsQues = [quesTitle.toStr(), quesItems.toStr(), nameInner.toStr(), quesBtnNext.toStr()].join(' ');
-    addToParents(ques.select, itemsQues);
-    
-    
-    let quesBtnX = new Div('question__item', 'X', 'button');
-    let quesBtnO = new Div('question__item', 'O', 'button');
-    let buttons = [quesBtnX.toStr(), quesBtnO.toStr()].join(' ');
-    addToParents(quesItems.select, buttons);
-    
-    let quesButtons = document.querySelectorAll('.question__item');
-    quesButtons[0].setAttribute('data-num', 1);
-    quesButtons[1].setAttribute('data-num', 2);
-    
-    
-    let nameTitle1 = new Div('name__title', 'Имя первого игрока');
-    let nameTitle2 = new Div('name__title', 'Имя второго игрока');
-    let userName1 = new Input('name__input');
-    let userName2 = new Input('name__input');
-    
-    let itemsName = [nameTitle1.toStr(), userName1.toStr(), nameTitle2.toStr(), userName2.toStr()].join(' ');
-    addToParents(nameInner.select, itemsName);
+function createFIrstState() {
+  let wrapper = new Div('wrapper');
+  addToParents('body', wrapper.toStr());
+  
+  let ques = new Div('question');
+  addToParents(wrapper.select, ques.toStr());
+  
+  let quesTitle = new Div('question__title', 'Сделайте выбор для первого игрока');
+  let quesItems = new Div('question__items');
+  let nameInner = new Div('name');
+  let quesBtnNext = new Div('btn-next', 'Начать игру', 'button');
+  let itemsQues = [quesTitle.toStr(), quesItems.toStr(), nameInner.toStr(), quesBtnNext.toStr()].join(' ');
+  addToParents(ques.select, itemsQues);
+  
+  
+  let quesBtnX = new Div('question__item', 'X', 'button');
+  let quesBtnO = new Div('question__item', 'O', 'button');
+  let buttons = [quesBtnX.toStr(), quesBtnO.toStr()].join(' ');
+  addToParents(quesItems.select, buttons);
+  
+  let quesButtons = document.querySelectorAll('.question__item');
+  quesButtons[0].setAttribute('data-num', 1);
+  quesButtons[1].setAttribute('data-num', 2);
+  
+  
+  let nameTitle1 = new Div('name__title', 'Имя первого игрока');
+  let nameTitle2 = new Div('name__title', 'Имя второго игрока');
+  let userName1 = new Input('name__input');
+  let userName2 = new Input('name__input');
+  
+  let itemsName = [nameTitle1.toStr(), userName1.toStr(), nameTitle2.toStr(), userName2.toStr()].join(' ');
+  addToParents(nameInner.select, itemsName);
 }
 
 function dBlock(selector) {
@@ -152,21 +175,3 @@ function dNone(selector) {
 function addText(selector, text) {
   document.querySelector(selector).innerHTML = text;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
